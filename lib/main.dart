@@ -35,6 +35,7 @@ class _MyAppState extends State<MyApp> {
 
     /// Define the types to get.
     List<HealthDataType> types = [
+      HealthDataType.WEIGHT,
       HealthDataType.ACTIVE_ENERGY_BURNED,
       HealthDataType.BLOOD_GLUCOSE,
       HealthDataType.BLOOD_OXYGEN,
@@ -42,14 +43,12 @@ class _MyAppState extends State<MyApp> {
       HealthDataType.BLOOD_PRESSURE_SYSTOLIC,
       HealthDataType.HEART_RATE,
       HealthDataType.STEPS,
-      HealthDataType.BLOOD_PRESSURE_DIASTOLIC,
-      // HealthDataType.DISTANCE_WALKING_RUNNING,
+      HealthDataType.MOVE_MINUTES,
     ];
 
     /// You MUST request access to the data types before reading them
     bool accessWasGranted = await health.requestAuthorization(types);
 
-    int steps = 0;
     if (accessWasGranted) {
       try {
         /// Fetch new data
@@ -64,13 +63,6 @@ class _MyAppState extends State<MyApp> {
 
       /// Filter out duplicates
       _healthDataList = HealthFactory.removeDuplicates(_healthDataList);
-
-      /// Print the results
-      _healthDataList.forEach((x) {
-        print("Data point: $x");
-        steps += (x.value as int);
-      });
-      print("Steps: $steps");
 
       /// Update the UI to display the results
       setState(() {
@@ -125,14 +117,15 @@ class _MyAppState extends State<MyApp> {
   }
 
   Widget _content() {
-    if (_state == AppState.DATA_READY)
+    if (_state == AppState.DATA_READY) {
       return _contentDataReady();
-    else if (_state == AppState.NO_DATA)
+    } else if (_state == AppState.NO_DATA) {
       return _contentNoData();
-    else if (_state == AppState.FETCHING_DATA)
+    } else if (_state == AppState.FETCHING_DATA) {
       return _contentFetchingData();
-    else if (_state == AppState.AUTH_NOT_GRANTED)
+    } else if (_state == AppState.AUTH_NOT_GRANTED) {
       return _authorizationNotGranted();
+    }
 
     return _contentNotFetched();
   }
@@ -141,26 +134,22 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Tng health test'),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.file_download),
-                onPressed: () {
-                  fetchData();
-                },
-              )
-            ],
-          ),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: double.infinity,
-                child: Center(child: _content()),
-              ),
-            ],
-          )),
+        appBar: AppBar(
+          title: const Text('Tng health test'),
+          backgroundColor: Colors.green,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.file_download),
+              onPressed: () {
+                fetchData();
+              },
+            )
+          ],
+        ),
+        body: Center(
+          child: _content(),
+        ),
+      ),
     );
   }
 }
