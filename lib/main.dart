@@ -35,7 +35,6 @@ class _MyAppState extends State<MyApp> {
 
     /// Define the types to get.
     List<HealthDataType> types = [
-      HealthDataType.WEIGHT,
       HealthDataType.ACTIVE_ENERGY_BURNED,
       HealthDataType.BLOOD_GLUCOSE,
       HealthDataType.BLOOD_OXYGEN,
@@ -43,6 +42,7 @@ class _MyAppState extends State<MyApp> {
       HealthDataType.BLOOD_PRESSURE_SYSTOLIC,
       HealthDataType.HEART_RATE,
       HealthDataType.STEPS,
+      HealthDataType.MOVE_MINUTES,
     ];
 
     /// You MUST request access to the data types before reading them
@@ -134,7 +134,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Tng health test'),
+          title: const Text('Tigeni Dev'),
           backgroundColor: Colors.green,
           actions: <Widget>[
             IconButton(
