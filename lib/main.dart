@@ -43,7 +43,6 @@ class _MyAppState extends State<MyApp> {
       HealthDataType.BLOOD_PRESSURE_SYSTOLIC,
       HealthDataType.HEART_RATE,
       HealthDataType.STEPS,
-      HealthDataType.MOVE_MINUTES,
     ];
 
     /// You MUST request access to the data types before reading them
